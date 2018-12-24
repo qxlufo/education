@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>登录页</title>
+
+  <!-- ========== Css Files ========== -->
+  <link   rel="stylesheet" th:href="@{/happy/css/root.css}">
+  <style type="text/css">
+    body{background: #F5F5F5;}
+  </style>
+  </head>
+  <body>
+
+    <div class="login-form">
+      <form action="login" method="post" th:action="@{/happy/login}">
+        <div class="top">
+          <img src="img/kode-icon.png" th:src="@{/happy/img/kode-icon.png}" alt="海壁" class="icon">
+          <h1>海壁</h1>
+          <h4>一家专门做数学的教育机构</h4>
+        </div>
+        <div class="form-area">
+          <div class="group">
+            <input type="text" name="account" class="form-control" placeholder="登录账号">
+            <i class="fa fa-user"></i>
+          </div>
+          <div class="group">
+            <input type="password" name="password" class="form-control" placeholder="密码">
+            <i class="fa fa-key"></i>
+          </div>
+          <div class="checkbox checkbox-primary">
+            <input id="checkbox101" type="checkbox" checked>
+            <label for="checkbox101">记住密码</label>
+          </div>
+          <button type="submit" class="btn btn-default btn-block">登陆</button>
+        </div>
+      </form>
+      <div class="footer-links row">
+        <div class="col-xs-6"><a href="regist/regist" th:href="@{/happy/regist/regist}"><i class="fa fa-external-link"></i> 注册</a></div>
+        <div class="col-xs-6 text-right"><a href="#"><i class="fa fa-lock"></i> 忘记密码</a></div>
+      </div>
+    </div>
+
+</body>
+</html>

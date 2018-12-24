@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>用户注册</title>
+    <link href="css/root.css" th:href="@{/happy/css/root.css}" rel="stylesheet">
+
+</head>
+<body>
+<div class="login-form">
+    <form id="editForm" action="regist" method="post">
+        <div class="top">
+            <h1>欢迎注册</h1>
+            <h4>请正确填写个人信息</h4>
+        </div>
+        <div class="form-area">
+            <div class="form-group group">
+                <input type="text" name="xm" id="xm" class="form-control" placeholder="姓名"  maxlength="25">
+                <i class="fa fa-user"></i>
+            </div>
+            <div class="form-group group">
+                <input type="text" id="sfzhm" name="sfzhm" class="form-control" placeholder="身份证号码"  maxlength="18">
+                <i class="fa fa-newspaper-o"></i>
+            </div>
+            <div class="form-group group">
+                <input type="text" name="sjhm"  class="form-control" placeholder="手机号码"  maxlength="11">
+                <i class="fa fa-mobile"></i>
+            </div>
+            <div class="form-group group">
+                <input type="text" name="zz"  class="form-control" placeholder="住址" maxlength="50">
+                <i class="fa fa-institution"></i>
+            </div>
+            <div class="form-group group">
+                <input type="text" id="dlzh" name="dlzh"  class="form-control" placeholder="登录账号"  maxlength="15">
+                <i class="fa fa-archive"></i>
+            </div>
+
+            <div class="form-group group">
+                <input type="password" name="mm" class="form-control" placeholder="密码"  maxlength="100">
+                <i class="fa fa-key"></i>
+            </div>
+
+            <div class="form-group group">
+                <input type="password" name="password" class="form-control" placeholder="确认密码"  maxlength="100">
+                <i class="fa fa-key"></i>
+            </div>
+            <button type="submit" class="btn btn-default btn-block" >注册</button>
+        </div>
+    </form>
+    <div class="footer-links row">
+        <div class="col-xs-6"><a href="#"><i class="fa fa-sign-in"></i>登陆</a></div>
+        <div class="col-xs-6 text-right"><a href="#"><i class="fa fa-lock"></i> 忘记密码</a></div>
+    </div>
+</div>
+
+<!-- ================================================
+jQuery Library
+================================================ -->
+<script type="text/javascript"  th:src="@{/happy/js/jquery.min.js}"></script>
+
+<!-- ================================================
+Bootstrap Core JavaScript File
+================================================ -->
+<script src="js/bootstrap/bootstrap.min.js" th:src="@{/happy/js/bootstrap/bootstrap.min.js}"></script>
+
+<!-- ================================================
+Plugin.js - Some Specific JS codes for Plugin Settings
+================================================ -->
+<script type="text/javascript" src="js/plugins.js" th:src="@{/happy/js/plugins.js}"></script>
+<!--引入表单验证-->
+<script type="text/javascript" src="js/boostraptValidator/bootstrapValidator.js" th:src="@{/happy/js/boostraptValidator/bootstrapValidator.js}"></script>
+<!--引入公用js-->
+<script type="text/javascript" src="js/common.js" th:src="@{/happy/js/common.js}"></script>
+
+<script>
+    /**验证登录账号是否唯一*/
+function validDlzh(dlzh){
+    var data = api_get("isRepeatAccount",{dlzh:dlzh});
+        if(data && "success"==data.sign){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**验证身份证是否唯一*/
+function validSfzhm(sfzhm){
+    if(sfzhm.length != 18){
+        return true;
+    }
+    var data = api_get("isRepeatIdCard",{sfzhm:sfzhm});
+    if(data && "success"==data.sign){
+        return true;
+    }
+    return false;
+}
+
+    $(document).ready(function(){
+        $('form').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                xm: {
+                    message: '用户名验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空'
+                        },
+                        stringLength:{
+                            max: 15,
+                            message: '名字最大长度为15字节'
+                        }
+                    }
+                },
+                sfzhm:{
+                    message:'身份证验证失败',
+                    validators:{
+                        notEmpty:{
+                            message:"身份证号码不为空"
+                        },
+                        regexp:{
+                            regexp:/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
+                            message:"你输入的身份证号有误"
+                        },
+                        callback:{
+                            message:"身份证号码已被占用",
+                            callback:function (value,validator) {
+                               return validSfzhm(value);
+                            }
+                        }
+                    }
+                },
+                sjhm:{
+                    message:"手机号码验证失败",
+                    validators:{
+                        notEmpty:{
+                            message:"手机号码不能为空"
+                        },
+                        phone:{
+                            country:"CN",
+                            message:"手机号码有误"
+                        }
+                    }
+                },
+                dlzh:{
+                    message:"登录账号验证失败",
+                    validators:{
+                        notEmpty:{
+                            message:"登录账不能为空"
+                        },
+                        regexp:{
+                            regexp:/^[a-zA-Z0-9_]+$/,
+                            message: '用户名只能包含大写、小写、数字和下划线'
+                        },
+                        callback:{
+                            message:"登录账号已被占用",
+                            callback:function (value,validator) {
+                                return validDlzh(value);
+                            }
+                        }
+                    }
+
+                },
+                mm:{
+                    message:"密码验证失败！",
+                    validators:{
+                        notEmpty:{
+                            message:"密码不能为空"
+                        }
+                    }
+                },
+                password:{
+                    message:"确认密码验证失败！",
+                    validators:{
+                        notEmpty:{
+                            message:"确认密码不能为空"
+                        },
+                        callback:{
+                            message:"您输入的确认密码有误！",
+                            callback:function(value, validator){
+                                var mm = $("input[name='mm']").val();
+                                if(value == mm){
+                                    return true;
+                                }
+                                return false;
+                            }
+                        }
+                    }
+                }
+
+            }
+        });
+
+
+
+    });
+
+</script>
+</body>
+</html>

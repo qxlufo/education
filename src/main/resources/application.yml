@@ -1,0 +1,17 @@
+server:
+  port: 8082
+  servlet:
+    path: /happy
+spring:
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/education?characterEncoding=utf8&autoReConnect=true&useSSL=false
+
+  jpa:
+    show-sql: true
+    database: mysql
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
