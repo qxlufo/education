@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     /**
-     * 自定义配置
+     * 自定义配 置
      */
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
