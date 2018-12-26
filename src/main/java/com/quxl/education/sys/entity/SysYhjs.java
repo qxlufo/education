@@ -5,16 +5,16 @@ import lombok.Data;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Data
 @Entity
 @Table(name = "sys_yhjs")
-public class SysYhjs  implements Serializable {
-	/**用户ID*/
-	@Id
-	private Long yhid;
-	/**角色ID*/
-	@Id
-	private Long jsid;
+@Data
+public class SysYhjs  {
+	@EmbeddedId
+	private SysYhjsKey id;
 
-
+	public SysYhjs() {
+	}
+	public SysYhjs(SysYhjsKey id) {
+		this.id = id;
+	}
 }

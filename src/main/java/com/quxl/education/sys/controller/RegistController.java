@@ -4,6 +4,7 @@ import com.quxl.education.common.returnModel.ResultSet;
 import com.quxl.education.common.returnModel.ResultSetService;
 import com.quxl.education.sys.bean.RegistMsgEditBean;
 import com.quxl.education.sys.entity.SysYh;
+import com.quxl.education.sys.service.SysJsService;
 import com.quxl.education.sys.service.SysYhService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,18 @@ public class RegistController {
     @Autowired
     private SysYhService   sysYhService;
 
+    @Autowired
+    private SysJsService    sysJsService;
+
     @RequestMapping("/regist")
     public ModelAndView regist(RegistMsgEditBean bean){
         if(StringUtils.isEmpty(bean.getDlzh())){
             return  new ModelAndView("sys/regist");
         }
-       this.sysYhService.saveRegistMessage(bean);
+        //保存注册用户
+       SysYh sysYh = this.sysYhService.saveRegistMessage(bean);
+        //保存角色
+        this.sysJsService.awardYhJs(sysYh.getYhid(),"临时用户");
         return new ModelAndView("login");
     }
 

@@ -36,7 +36,7 @@ public abstract class CurdCerviceAbstractImpl<T,ID extends Serializable> impleme
     @Override
     @Transactional
     public Page<T> findAllByPage(int page, int pagesize) {
-        PageRequest pageable = new PageRequest(page-1,pagesize);
+        PageRequest pageable = PageRequest.of(page-1,pagesize);
         return getRepository().findAll(pageable);
     }
 

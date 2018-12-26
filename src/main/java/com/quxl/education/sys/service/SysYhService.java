@@ -32,5 +32,5 @@ public interface SysYhService extends CurdService<SysYh,Long> {
      * @param bean
      * @return
      */
-    public SysYh saveRegistMessage(RegistMsgEditBean bean);
+    public SysYh  saveRegistMessage(RegistMsgEditBean bean);
 }
