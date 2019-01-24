@@ -17,7 +17,7 @@ public interface CurdService<T_Entity,ID extends Serializable> {
     public EntityReporitory<T_Entity, ID> getRepository();
 
     @Transactional
-    public void persist(T_Entity e);
+    public T_Entity persist(T_Entity e);
 
     @Transactional
     public void merge(T_Entity e);

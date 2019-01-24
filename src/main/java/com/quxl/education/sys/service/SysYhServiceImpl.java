@@ -66,4 +66,16 @@ public class SysYhServiceImpl extends CurdCerviceAbstractImpl<SysYh,Long> implem
         sysYh = this.repository.save(sysYh);
         return sysYh;
     }
+
+    @Override
+    public SysYh findByDlzh(String dlzh) {
+        if(StringUtils.isEmpty(dlzh)){
+            return null;
+        }
+        List<SysYh> sysYhs = this.repository.findByDlzh(dlzh);
+        if(sysYhs.size() > 0){
+            return sysYhs.get(0);
+        }
+        return  null;
+    }
 }

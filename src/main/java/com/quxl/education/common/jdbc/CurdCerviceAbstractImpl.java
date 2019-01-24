@@ -17,8 +17,8 @@ public abstract class CurdCerviceAbstractImpl<T,ID extends Serializable> impleme
 
     @Override
     @Transactional
-    public void persist(T e) {
-        getRepository().save(e);
+    public T persist(T e) {
+        return getRepository().save(e);
     }
 
     @Override

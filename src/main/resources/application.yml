@@ -23,3 +23,8 @@ spring:
 #      user:
 #        name: user
 #        password: 123456
+
+
+
+
+filepath : G:/textFile

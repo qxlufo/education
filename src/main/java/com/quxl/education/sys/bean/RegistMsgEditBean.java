@@ -1,6 +1,9 @@
 package com.quxl.education.sys.bean;
 
+import com.quxl.education.common.annocation.TryStuday;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * 用于保存注册页面返回的信息
@@ -25,5 +28,6 @@ public class RegistMsgEditBean {
     /**手机号码*/
     private String sjhm;
     /**住址*/
+    @TryStuday
     private String zz;
 }

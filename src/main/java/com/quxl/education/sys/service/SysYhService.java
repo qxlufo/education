@@ -33,4 +33,11 @@ public interface SysYhService extends CurdService<SysYh,Long> {
      * @return
      */
     public SysYh  saveRegistMessage(RegistMsgEditBean bean);
+
+    /**
+     * 通过登录账号获得系统用户信息
+     * @param dlzh 登陆账号
+     * @return
+     */
+    public SysYh findByDlzh(String dlzh);
 }
