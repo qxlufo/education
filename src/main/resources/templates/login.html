@@ -11,6 +11,16 @@
   <link   rel="stylesheet" th:href="@{/happy/css/root.css}">
   <style type="text/css">
     body{background: #F5F5F5;}
+    validcodeInput{
+      padding-left: 38px;
+      height: 40px;
+      border-radius: 3px;
+      font-size: 14px;
+      background: #fff;
+      border: 1px solid #BDC4C9;
+      display: block;
+      box-shadow: inset 0px 1px 0px #F1F0F1;
+    }
   </style>
   </head>
   <body>
@@ -30,6 +40,11 @@
           <div class="group">
             <input type="password" name="password" class="form-control" placeholder="密码">
             <i class="fa fa-key"></i>
+          </div>
+          <div class="group">
+            <input type="text" name="validationCode" class="validcodeInput" placeholder="验证码">
+            <i class="fa fa-key"></i>
+            <img src="/happy/code/image" th:src="@{/happy/code/image}" class="">
           </div>
           <div class="checkbox checkbox-primary">
             <input id="checkbox101" type="checkbox" checked>
