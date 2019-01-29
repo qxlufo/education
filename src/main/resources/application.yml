@@ -27,9 +27,12 @@ filepath : G:/textFile
 ##配置图片验证码
 education:
   security:
+    rememberMeSeconds: 50000 ##Token有效时间
     imageCode:
       width: 70
       height: 25
       randNumSize: 5
       expireTimeSecond: 90
       url: /happy/login1,/happy/login
+
+

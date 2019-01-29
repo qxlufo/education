@@ -9,13 +9,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
+
+import javax.sql.DataSource;
 
 /**
  * 安全配置类
@@ -35,6 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private EducationSecurityProperties educationSecurityProperties;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private UserDetailsService myUserDetailsService;
+
     /**
      * 处理密码加密
      * @return
@@ -44,6 +56,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new MyPasswordEncoder();
     }
 
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository(){
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+//        tokenRepository.setCreateTableOnStartup(true);首次执行 放开创建Token 表
+        return  tokenRepository;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -62,6 +81,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(myAuthenticationFailureHander)//登录失败调用
 //                .successForwardUrl("/happy/loginSuccess")//登陆成功后调用页面
 //                .failureUrl("/happy/login")
+                //配置Token 记住我功能
+                .and()
+                .rememberMe()
+                .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(educationSecurityProperties.getRememberMeSeconds()) //配置有效时间
+                .userDetailsService(myUserDetailsService)
                 //.httpBasic()//弹出式
                 .and()
                 .authorizeRequests()//授权请求
