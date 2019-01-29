@@ -2,6 +2,7 @@ package com.quxl.education.configger;
 
 
 import com.quxl.education.common.filter.ValidateCodeFilter;
+import com.quxl.education.configger.properties.EducationSecurityProperties;
 import com.quxl.education.configger.security.MyPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthenticationFailureHandler myAuthenticationFailureHander;
 
+    @Autowired
+    private EducationSecurityProperties educationSecurityProperties;
     /**
      * 处理密码加密
      * @return
@@ -47,6 +50,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //图形验证码
         ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
         validateCodeFilter.setAuthenticationFailureHander(myAuthenticationFailureHander);
+        validateCodeFilter.setEducationSecurityProperties(educationSecurityProperties);
+        validateCodeFilter.afterPropertiesSet();
+
         http
                 .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
