@@ -21,9 +21,7 @@ public class SysJsController {
 
     @RequestMapping("/saveSysJs")
     public String saveSysJs(SysJs sysJs){
-        System.out.println(sysJs.toString());
         if(StringUtils.isEmpty(sysJs)){
-            System.out.println("无角色保存内容");
             return "error";
         }
         this.sysJsService.getRepository().save(sysJs);

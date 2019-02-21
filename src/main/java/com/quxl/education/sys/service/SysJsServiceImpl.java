@@ -51,18 +51,15 @@ public class SysJsServiceImpl extends CurdCerviceAbstractImpl<SysJs,Long> implem
         SysYhjsKey key = new SysYhjsKey();
         key.setYhid(yhid);
         key.setJsid(jsid);
-        System.out.println("key");
         this.sysYhjsRepository.save(new SysYhjs(key));
         return true;
     }
 
     @Override
     public List<SysJs> fingSysJsBySysYhId(Long yhid) {
-        System.out.println(yhid);
         List<SysYhjs> yhjss = this.sysYhjsRepository.selectYhJsByYhid(yhid);
         List<SysJs> sysJss = new ArrayList<>();
         for (SysYhjs yhjs:yhjss ) {
-            System.out.println(yhjs.getId().getJsid());
             SysJs  js = this.repository.getOne(yhjs.getId().getJsid());
             sysJss.add(js);
         }
@@ -79,7 +76,6 @@ public class SysJsServiceImpl extends CurdCerviceAbstractImpl<SysJs,Long> implem
                 jsStr += ",";
             }
         }
-        System.out.println(jsStr);
         return jsStr;
     }
 }

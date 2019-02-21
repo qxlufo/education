@@ -75,4 +75,7 @@ Plugin Css
 /*引入boostrapt 表达那验证*/
 @import url("plugin/boostrapt-validator/bootstrapValidator.css");
 
+/**引入boostrapt-table*/
+@import url("boostrapt-table/bootstrap-table.min.css");
+
 

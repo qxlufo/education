@@ -21,7 +21,7 @@ spring:
 
 
 
-
+##文件保存地址
 filepath : G:/textFile
 
 ##配置图片验证码
@@ -31,7 +31,7 @@ education:
     imageCode:
       width: 70
       height: 25
-      randNumSize: 5
+      randNumSize: 1
       expireTimeSecond: 90
       url: /happy/login1,/happy/login
 
