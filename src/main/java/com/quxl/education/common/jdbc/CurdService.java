@@ -1,9 +1,13 @@
 package com.quxl.education.common.jdbc;
 
+import com.quxl.education.common.PageReturn;
 import org.springframework.data.domain.Page;
 
+import javax.persistence.criteria.CriteriaQuery;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 服务层公用的方法抽象
@@ -39,5 +43,8 @@ public interface CurdService<T_Entity,ID extends Serializable> {
 
     @Transactional
     public void delete(T_Entity entity);
+
+    @Transactional
+    public PageReturn findAllByPageCondition(int page, int pagesize, HttpServletRequest request, Class clzz, MyOrder... myOrders);
 
 }

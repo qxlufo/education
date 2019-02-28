@@ -1,10 +1,15 @@
 package com.quxl.education.common.jdbc;
 
+import com.quxl.education.common.PageReturn;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.CriteriaQuery;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author: create by qxl
@@ -38,6 +43,14 @@ public abstract class CurdCerviceAbstractImpl<T,ID extends Serializable> impleme
     public Page<T> findAllByPage(int page, int pagesize) {
         PageRequest pageable = PageRequest.of(page-1,pagesize);
         return getRepository().findAll(pageable);
+    }
+
+    @Override
+    @Transactional
+    public PageReturn findAllByPageCondition(int page, int pagesize, HttpServletRequest request, Class clzz, MyOrder... myOrders){
+        PageRequest pageable = PageRequest.of(page-1,pagesize);
+        Page<T> p = getRepository().findAll(new MySpecification<T>(request,clzz,myOrders),PageRequest.of(page-1,pagesize));
+        return  new PageReturn(p.getTotalElements(),p.getContent());
     }
 
     @Override

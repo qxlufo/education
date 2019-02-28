@@ -36,8 +36,6 @@ public class LoginController {
         Tool.setSessionAttribute(StaticParams.USER_SESSION_KEY,sysYh);//将用户信息存放到session 中
         //将目录信息存放到全局变量中
         Tool.setContextAttribute("sysXtqxes",this.sysXtqxService.findcd());
-
-
         return  new ModelAndView("/sys/main");
     }
 

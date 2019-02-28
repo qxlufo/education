@@ -90,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.httpBasic()//弹出式
                 .and()
                 .authorizeRequests()//授权请求
-                .antMatchers("/happy/login","/happy/css/**","/happy/fonts/**","/happy/img/**","/happy/js/**","/happy/code/*").permitAll()
+                .antMatchers("/happy/login","/happy/css/**","/happy/fonts/**","/happy/img/**","/happy/js/**","/happy/code/*","/happy/sys/xiqx/*").permitAll()
                 .anyRequest() //任何请求
                 .authenticated()//都需要身份认证
                 .and()
